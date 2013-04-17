@@ -6,6 +6,8 @@ package eu.ehri.project.models.cvoc;
 
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.frames.Adjacency;
+import eu.ehri.project.models.EntityClass;
+import eu.ehri.project.models.annotations.EntityType;
 import eu.ehri.project.models.base.AccessibleEntity;
 import eu.ehri.project.models.base.IdentifiableEntity;
 import eu.ehri.project.models.base.PermissionScope;
@@ -14,14 +16,14 @@ import eu.ehri.project.models.base.PermissionScope;
  *
  * @author linda
  */
-public interface AuthorativeSet extends AccessibleEntity, IdentifiableEntity, PermissionScope {
-    public static final String LABEL = "authorativelist";
-    public static final String IN_SET = "inAuthorativeList";
+@EntityType(EntityClass.AUTHORITATIVE_SET)
+public interface AuthoritativeSet extends AccessibleEntity, IdentifiableEntity, PermissionScope {
+    public static final String IN_SET = "inAuthoritativeList";
 
     @Adjacency(label = IN_SET, direction = Direction.IN)
-    public Iterable<AuthorativeItem> getAuthorativeItems();
+    public Iterable<AuthoritativeItem> getAuthoritativeItems();
 
     @Adjacency(label = IN_SET, direction = Direction.IN)
-    public void addAuthorativeItem(final AuthorativeItem authorativeItem);
+    public void addAuthoritativeItem(final AuthoritativeItem authoritativeItem);
     
 }
