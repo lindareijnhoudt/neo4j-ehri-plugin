@@ -5,11 +5,9 @@
 package eu.ehri.project.importers;
 
 import eu.ehri.project.importers.properties.XmlImportProperties;
-import eu.ehri.project.models.HistoricalAgent;
-import eu.ehri.project.models.Repository;
-import eu.ehri.project.models.cvoc.AuthorativeItem;
-import eu.ehri.project.models.cvoc.AuthorativeSet;
+import eu.ehri.project.models.cvoc.AuthoritativeSet;
 import java.io.InputStream;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.slf4j.Logger;
@@ -23,13 +21,11 @@ public class PersonalitiesImporterTest extends AbstractImporterTest{
     
     private static final Logger logger = LoggerFactory.getLogger(PersonalitiesImporterTest.class);
     protected final String SINGLE_EAD = "Personalities_small.csv";
-    // Depends on fixtures
-    protected final String TEST_REPO = "r1";
 
     @Test
     public void testImportItemsT() throws Exception {
-        AuthorativeSet authorativeSet = manager.getFrame("cvoc1", AuthorativeSet.class);
-        int voccount = toList(authorativeSet.getAuthorativeItems()).size();
+        AuthoritativeSet authoritativeSet = manager.getFrame("cvoc1", AuthoritativeSet.class);
+        int voccount = toList(authoritativeSet.getAuthoritativeItems()).size();
         logger.debug("number of items: " + voccount);
         
         final String logMessage = "Importing some WP18 Personalities records";
@@ -41,7 +37,7 @@ public class PersonalitiesImporterTest extends AbstractImporterTest{
 
         int count = getNodeCount(graph);
         InputStream ios = ClassLoader.getSystemResourceAsStream(SINGLE_EAD);
-        ImportLog log = new CsvImportManager(graph, authorativeSet, validUser, PersonalitiesImporter.class).importFile(ios, logMessage);
+        ImportLog log = new CsvImportManager(graph, authoritativeSet, validUser, PersonalitiesImporter.class).importFile(ios, logMessage);
 
         /*
          * 8 HistAgent
@@ -50,7 +46,7 @@ public class PersonalitiesImporterTest extends AbstractImporterTest{
          * 1 more import Event
          */
         assertEquals(count+26, getNodeCount(graph));
-        assertEquals(voccount+8, toList(authorativeSet.getAuthorativeItems()).size());
+        assertEquals(voccount + 8, toList(authoritativeSet.getAuthoritativeItems()).size());
        
     }
 }
